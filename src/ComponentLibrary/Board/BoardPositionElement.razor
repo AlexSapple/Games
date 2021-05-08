@@ -1,0 +1,80 @@
+﻿@using Common.Interface
+ 
+<div class="@Classes" style="border-color: @(_borderColour); background-color: @(BackgroundColour);" @onmouseover="HandleMouseOverPosition" @onmouseout="HandleMouseOutPosition" @onclick="HandlePositionClick">
+    <div>&nbsp;</div>
+</div>
+
+@code{
+    [Parameter] public IBoardPosition Position { get; set; }
+
+    [CascadingParameter(Name = "Turn")] (IPlayer CurrentTurn, bool IsMyTurn) CurrentTurnAndIsMyTurn { get; set; }
+
+    private string Classes
+    {
+        get
+        {
+            string classes = $"boardPosition {(Position.CanStartSelect && CurrentTurnAndIsMyTurn.IsMyTurn ? "selectable" : "")}";
+
+            if (Position.CanEndSelect && CurrentTurnAndIsMyTurn.IsMyTurn)
+                classes = $"{classes} EndSelectable";
+
+            return classes;
+        }
+    }
+
+    private string BackgroundColour
+    {
+        get
+        {
+            string backgroundColour = "WhiteSmoke";
+
+            if (Position.Occupier?.Colour != null)
+                backgroundColour = Position.Occupier.Colour.Name;
+
+            if (Position.CanEndSelect && CurrentTurnAndIsMyTurn.IsMyTurn)
+            {
+                var colour = CurrentTurnAndIsMyTurn.CurrentTurn.Colour;
+                backgroundColour = $"rgba({colour.R},{colour.G},{colour.B},0.3)";
+            }
+
+            return backgroundColour;
+        }
+    }
+
+    private string _borderColour = "rgba(0, 0, 0, 0.8)";
+
+    private void HandleMouseOverPosition()
+    {
+        if (Position.CanStartSelect || Position.CanEndSelect && CurrentTurnAndIsMyTurn.IsMyTurn)
+            _borderColour = "white";
+    }
+
+    private void HandleMouseOutPosition()
+    {
+        _borderColour = "rgba(0, 0, 0, 0.8)";
+    }
+
+    private void HandlePositionClick()
+    {
+        if (!CurrentTurnAndIsMyTurn.IsMyTurn)
+            return;
+
+        //this position is not marked as selectable in any way
+        if (!Position.CanStartSelect && !Position.CanEndSelect)
+            return;
+
+        //we must be unselecting our initial select
+        if (Position.IsStartSelected)
+        {
+            Position.IsStartSelected = false;
+            return;
+        }
+
+        //we are completing a move.
+        if (Position.CanEndSelect)
+            Position.IsEndSelected = true;
+        else
+            //we are making our initial select
+            Position.IsStartSelected = true;
+    }
+}

@@ -1,0 +1,61 @@
+﻿@using ComponentLibrary.Board
+@using ComponentLibrary.WinLoseDraw
+@using Game
+@using AutomatedPlayer
+@using Common.Enum;
+@page "/"
+
+@if (game != null)
+{
+    <BoardElement BoardData="@game.Board" MyPlayerId="@MyPlayerId" />
+}
+
+@if (game?.Status == Status.Completed)
+{
+    var parameters = new ModalParameters();
+    parameters.Add(nameof(Outcome), GetOutcome());
+    Modal.Show<WinLoseDraw>("", parameters, new ModalOptions { HideCloseButton = true });
+}
+
+@code{
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    private SlimeWars game;
+
+    private Guid MyPlayerId;
+
+    //keep a collection of opponents to ensure they do not fall out of scope and become fodder for the GC mid game :)
+    private List<AutomatedPlayer> Opponents = new List<AutomatedPlayer>();
+
+    protected override void OnInitialized()
+    {
+        //identifier of this human player
+        MyPlayerId = Guid.NewGuid();
+
+        //identifier of our cpu opponent
+        Guid opponentId = Guid.NewGuid();
+
+        //fire up the game logic and board
+        game = new SlimeWars(7, 7, new List<Guid> { MyPlayerId, opponentId });
+        game.PropertyChanged += (s, e) => StateHasChanged();
+        game.TurnIterated += (s, e) => StateHasChanged();
+
+        //and make sure our opponent has a reference to the game board too.
+        Opponents.Add(new MechanicalTurk(opponentId, game.Board));
+    }
+
+    private Outcome GetOutcome()
+    {
+        if (game.Status != Status.Completed)
+            throw new Exception("the game has not yet completed, do not call GetOutcome yet");
+
+        Outcome outcome = Outcome.Lose;
+        if (game.Winner == null)
+            outcome = Outcome.Draw;
+        else if (game.Winner.Id == MyPlayerId)
+            outcome = Outcome.Win;
+
+        return outcome;
+    }
+}

@@ -1,0 +1,48 @@
+﻿@using Common.Interface
+
+<div class="boardWrapper" style=@GetColumnLayout()>
+    <CascadingValue Value="@CurrentTurnAndIsMyTurn" Name="Turn">
+        @foreach (var position in BoardData.Positions)
+        {
+            <BoardPositionElement Position=@position />
+        }
+    </CascadingValue>
+</div>
+
+@code {
+    /// <summary>
+    /// The underlying board structure for a game.
+    /// </summary>
+    [Parameter] public IBoard BoardData { get; set; }
+
+    /// <summary>
+    /// my player Id 
+    /// </summary>
+    [Parameter] public Guid MyPlayerId { get; set; }
+
+    /// <summary>
+    /// tuple of the current turn and if that turn is "myTurn"
+    /// </summary>
+    private (IPlayer CurrentTurn, bool IsMyTurn) CurrentTurnAndIsMyTurn { 
+        get 
+        {
+            return (BoardData.CurrentTurn, BoardData.CurrentTurn?.Id == MyPlayerId); 
+        } 
+    }
+
+    protected override void OnInitialized()
+    {
+        if (BoardData == null)
+            throw new ArgumentNullException(nameof(BoardData), "Must not be null");
+
+        //since game logic may make changes to the positions of the board (outside of the context
+        //of any specific dom event - we subscribe to the games boardChangeCompleted event to ensure
+        //we re-draw the board when this happens.
+        BoardData.BoardChangeCompleted += (s, e) => StateHasChanged();
+    }
+
+    private string GetColumnLayout()
+    {
+        return "grid-template-columns: " + string.Concat(Enumerable.Repeat("auto ", BoardData.Width));
+    }
+}
