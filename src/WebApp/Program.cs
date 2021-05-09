@@ -5,7 +5,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace SlimeWars
+namespace WebApp
 {
     public class Program
     {
