@@ -13,8 +13,8 @@ namespace AutomatedPlayer
     /// </summary>
     public class MechanicalTurk : AutomatedPlayer
     {
-        public MechanicalTurk(Guid myPlayerId, IBoard board)
-            :base(myPlayerId, board)
+        public MechanicalTurk(Guid myPlayerId, ITurnBasedBoardGame game)
+            :base(myPlayerId, game)
         {}
 
         protected override void MakeMove()
@@ -29,7 +29,7 @@ namespace AutomatedPlayer
             startPositionsAlreadyAttempted ??= new List<IBoardPosition>();
 
             //get my positions, but only take those which have not already been attempted
-            var myPositions = Board?.Positions?.Where(p => p.Occupier?.Id == MyPlayerId 
+            var myPositions = Game.Board?.Positions?.Where(p => p.Occupier?.Id == MyPlayerId 
                   && p.CanStartSelect
                   && !startPositionsAlreadyAttempted.Contains(p));
 
@@ -46,7 +46,7 @@ namespace AutomatedPlayer
 
             //now the board should have a load of end select positions (updated based on the start selection above).
             //if not, recursively call this method to try another position excluding already attempted
-            var endSelectablePositions = Board.Positions.Where(p => p.CanEndSelect);
+            var endSelectablePositions = Game.Board.Positions.Where(p => p.CanEndSelect);
             if (!endSelectablePositions.Any())
                 MakeMove(startPositionsAlreadyAttempted);
             else

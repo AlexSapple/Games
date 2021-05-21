@@ -42,7 +42,7 @@
         game.TurnIterated += (s, e) => StateHasChanged();
 
         //and make sure our opponent has a reference to the game board too.
-        Opponents.Add(new MechanicalTurk(opponentId, game.Board));
+        Opponents.Add(new MechanicalTurk(opponentId, game));
     }
 
     private Outcome GetOutcome()
