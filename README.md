@@ -13,7 +13,8 @@ The commonality of a 2d board in various games (think chess, draughts, scrabble 
 along with the "dumbness" of the board element allow for this solution to quickly create playable games with a completely re-useable
 board that doesn't need to understand the game being played. 
 
-##To run the project locally
+## To run the project locally
+
 debug from your preferred IDE GUI (with WebApp as startup project) or using Dot net CLI;
 
     /src/WebApp/ dotnet run
