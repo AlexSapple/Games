@@ -1,5 +1,5 @@
 # Games
-A set of projects to create simple games in C# and blazor based around a 2d board structure.
+A set of projects to create simple games in C# and blazor, based around a 2d board structure.
 
 This project is intended for experimentation and learning. It consists of a solution containing a 
 .Net 5 Blazor web application with a component library and various C# projects. The application layer
