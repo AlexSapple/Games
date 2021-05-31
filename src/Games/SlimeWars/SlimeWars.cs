@@ -1,14 +1,15 @@
-﻿using Common.Enum;
-using Common.Interface;
-using Game.Event;
+﻿using Game.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Extensions;
 using Game.GameTypeBases;
 using Game.BoardGame;
+using Game;
+using Game.Interface;
+using Game.Enum;
 
-namespace Game
+namespace SlimeWars
 {
     /// <summary>
     /// Represents a single game of slime wars. Handles the logic
@@ -57,7 +58,7 @@ namespace Game
         /// <param name="humanPlayers"></param>
         /// <param name="timeLimitPerTurnInSeconds"></param>
         public SlimeWars(int width, int height, List<Guid> players, int timeLimitPerTurnInSeconds = 60)
-            : base (players, Colours, width, height,  timeLimitPerTurnInSeconds)
+            : base(players, Colours, width, height, timeLimitPerTurnInSeconds)
         {
             _board.BoardChange += HandleBoardChangeEvent;
             IteratePlayerTurn();
@@ -117,12 +118,12 @@ namespace Game
         /// </summary>
         private void UpdateStartSelectablePositions()
         {
-            if(_board.CurrentTurn != null)
+            if (_board.CurrentTurn != null)
             {
                 //get all the positions that are occupied by the current player
                 //and iterate through them to establish where the player can move
                 var applicablePrimaryPositions = _board._positions.Where(p => p.Occupier == _board.CurrentTurn);
-                foreach(Position position in applicablePrimaryPositions)
+                foreach (Position position in applicablePrimaryPositions)
                 {
                     position.CanStartSelect = true;
                 }
@@ -139,7 +140,7 @@ namespace Game
             if (position == null)
                 return;
 
-            if(position.IsStartSelected)
+            if (position.IsStartSelected)
             {
                 //make sure any other start selected positions are unselected at this point
                 var deselectPositions = _board._positions.Where(p => p.IsStartSelected && p != position);
@@ -151,13 +152,13 @@ namespace Game
                 var neighbours = position.GetNeighbours(_board._positions, 2);
                 foreach (Position applicablePosition in neighbours)
                 {
-                    if(applicablePosition.Occupier == null && applicablePosition.IsStraightLineFrom(position))
+                    if (applicablePosition.Occupier == null && applicablePosition.IsStraightLineFrom(position))
                         applicablePosition.CanEndSelect = true;
                 }
             }
             else
             {
-                foreach(Position applicableEndPosition in _board._positions.Where(p => p.CanEndSelect))
+                foreach (Position applicableEndPosition in _board._positions.Where(p => p.CanEndSelect))
                     applicableEndPosition.CanEndSelect = false;
             }
         }
@@ -172,7 +173,7 @@ namespace Game
             if (position == null)
                 return;
 
-            if(position.IsEndSelected)
+            if (position.IsEndSelected)
             {
                 //1. occupy this position
                 position.Occupier = Players.SingleOrDefault(p => p.Id == _board.CurrentTurn.Id);
@@ -182,7 +183,7 @@ namespace Game
 
                 //3. switch any immediate neighbours
                 var neighboursToInfect = neighbours.Where(n => n.Occupier != null);
-                foreach(var neighbour in neighboursToInfect)
+                foreach (var neighbour in neighboursToInfect)
                 {
                     neighbour.Occupier = Players.SingleOrDefault(p => p.Id == _board.CurrentTurn.Id);
                 }
@@ -202,7 +203,7 @@ namespace Game
                     Winner = _board.CurrentTurn;
                     ResetBoard();
 
-                    if(winType == WinType.LegalMoves)
+                    if (winType == WinType.LegalMoves)
                     {
                         //for animation purposes, in this type of win, we want to occupy all the places.
                         var fillPositions = _board._positions.Where(p => p.Occupier == null)?.ToList();
@@ -235,9 +236,9 @@ namespace Game
 
             int playerIndex = 0;
             var allOccupiedPositions = _board.Positions.Where(p => p.Occupier != null);
-            foreach(var player in Players)
+            foreach (var player in Players)
             {
-                if(allOccupiedPositions.Any(p => p.Occupier.Id == player.Id))
+                if (allOccupiedPositions.Any(p => p.Occupier.Id == player.Id))
                 {
                     if (player.Id == _board.CurrentTurn.Id)
                     {
@@ -307,7 +308,7 @@ namespace Game
             if (!allPlayerPositions.Any())
                 return false;
 
-            foreach(Position position in allPlayerPositions)
+            foreach (Position position in allPlayerPositions)
             {
                 var neighbours = position.GetNeighbours(_board._positions, 2)
                     .Where(n => position.IsStraightLineFrom(n))

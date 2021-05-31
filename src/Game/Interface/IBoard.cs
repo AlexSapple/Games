@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace Common.Interface
+namespace Game.Interface
 {
     /// <summary>
     /// Represents a game board

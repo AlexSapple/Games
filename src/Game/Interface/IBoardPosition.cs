@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Common.Interface
+namespace Game.Interface
 {
     /// <summary>
     /// Represents a position of a game board

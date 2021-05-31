@@ -5,8 +5,8 @@ namespace Game.Event
 {
     public class BoardChangeEventArgs : EventArgs
     {
-        internal Position SourcePosition { get; set; }
+        public Position SourcePosition { get; set; }
 
-        internal string PropertyName { get; set; }
+        public string PropertyName { get; set; }
     }
 }

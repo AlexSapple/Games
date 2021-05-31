@@ -1,12 +1,12 @@
 ﻿@switch (Outcome)
 {
-    case Common.Enum.Outcome.Win:
+    case Game.Enum.Outcome.Win:
         <img src="/Win.jpg" alt="you're winner" width="250" height="250" />
         break;
-    case Common.Enum.Outcome.Lose:
+    case Game.Enum.Outcome.Lose:
         <img src="/lose.png" alt="you're loser" width="250" height="250" />
         break;
-    case Common.Enum.Outcome.Draw:
+    case Game.Enum.Outcome.Draw:
         <div style="width: 250px; height: 250px;">
             <span>You're... draw :( </span>
         </div>
@@ -16,5 +16,5 @@
 }
 
 @code {
-    [Parameter] public Common.Enum.Outcome Outcome { get; set; }
+    [Parameter] public Game.Enum.Outcome Outcome { get; set; }
 }

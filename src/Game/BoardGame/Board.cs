@@ -1,5 +1,5 @@
-﻿using Common.Interface;
-using Game.Event;
+﻿using Game.Event;
+using Game.Interface;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

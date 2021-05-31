@@ -8,7 +8,7 @@ namespace Game.Extensions
     /// <summary>
     /// Position extensions
     /// </summary>
-    internal static class PositionExtensions
+    public static class PositionExtensions
     {
         /// <summary>
         /// Determine if the position and the candiate position are situated on a straight line
@@ -17,7 +17,7 @@ namespace Game.Extensions
         /// <param name="position"></param>
         /// <param name="candidatePosition"></param>
         /// <returns></returns>
-        internal static bool IsStraightLineFrom(this Position position, Position candidatePosition)
+        public static bool IsStraightLineFrom(this Position position, Position candidatePosition)
         {
             if (candidatePosition == null)
                 return false;
@@ -38,7 +38,7 @@ namespace Game.Extensions
             return xDegreeOfSeperation == yDegreeOfSeperation;
         }
 
-        internal static List<Position> GetNeighbours(this Position position, List<Position> candidatePositions, int degreeOfSeperation = 1, List<Position> neighbours = null)
+        public static List<Position> GetNeighbours(this Position position, List<Position> candidatePositions, int degreeOfSeperation = 1, List<Position> neighbours = null)
         {
             neighbours ??= new List<Position>();
 
