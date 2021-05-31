@@ -1,4 +1,4 @@
-﻿using Common.Interface;
+﻿using Game.Interface;
 using System;
 using System.Drawing;
 

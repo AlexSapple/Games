@@ -1,4 +1,4 @@
-﻿namespace Common.Enum
+﻿namespace Game.Enum
 {
     /// <summary>
     /// The type of win. This can be used where a win requires some 

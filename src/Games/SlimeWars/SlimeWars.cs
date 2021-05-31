@@ -1,6 +1,4 @@
-﻿using Common.Enum;
-using Common.Interface;
-using Game.Event;
+﻿using Game.Event;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +6,8 @@ using Game.Extensions;
 using Game.GameTypeBases;
 using Game.BoardGame;
 using Game;
+using Game.Interface;
+using Game.Enum;
 
 namespace SlimeWars
 {

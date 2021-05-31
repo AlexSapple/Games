@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Interface
+namespace Game.Interface
 {
     /// <summary>
     /// Represents a turn based board game

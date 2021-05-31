@@ -1,10 +1,10 @@
 ﻿using System.Runtime.CompilerServices;
 using System.ComponentModel;
-using Common.Enum;
-using Common.Interface;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using Game.Interface;
+using Game.Enum;
 
 namespace Game.GameTypeBases
 {

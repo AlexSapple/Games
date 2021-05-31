@@ -1,4 +1,4 @@
-﻿namespace Common.Enum
+﻿namespace Game.Enum
 {
     public enum Outcome
     {
