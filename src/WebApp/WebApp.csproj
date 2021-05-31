@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AutomatedPlayer\AutomatedPlayer.csproj" />
     <ProjectReference Include="..\ComponentLibrary\ComponentLibrary.csproj" />
+    <ProjectReference Include="..\Games\SlimeWars\SlimeWars.csproj" />
     <ProjectReference Include="..\Game\Game.csproj" />
   </ItemGroup>
 
