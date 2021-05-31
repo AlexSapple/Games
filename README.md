@@ -1,6 +1,9 @@
 # Games
 A set of projects to create simple games in C# and blazor, based around a 2d board structure.
 
+[![CodeQL](https://github.com/AlexSapple/Games/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/AlexSapple/Games/actions/workflows/codeql-analysis.yml)
+[![.NET](https://github.com/AlexSapple/Games/actions/workflows/dotnet.yml/badge.svg)](https://github.com/AlexSapple/Games/actions/workflows/dotnet.yml)
+
 This project is intended for experimentation and learning. It consists of a solution containing a 
 .Net 5 Blazor web application with a component library and various C# projects. The application layer
 is essentially a demonstration of the components and logic. 
