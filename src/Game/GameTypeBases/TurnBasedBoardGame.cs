@@ -20,11 +20,11 @@ namespace Game.GameTypeBases
         protected readonly Timer _turnTimer;
 
         #region turn iterated event handler
-        public event EventHandler<EventArgs> TurnIterated;
+        protected event EventHandler<EventArgs> _turnIterated;
 
         protected void OnTurnIterated(EventArgs e)
         {
-            TurnIterated?.Invoke(this, e);
+            _turnIterated?.Invoke(this, e);
         }
         #endregion
 

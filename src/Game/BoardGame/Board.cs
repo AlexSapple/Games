@@ -55,11 +55,6 @@ namespace Game.BoardGame
             BoardChange?.Invoke(this, e);
         }
 
-        protected void OnBoardChangeCompleted(EventArgs e)
-        {
-            BoardChangeCompleted?.Invoke(this, e);
-        }
-
         /// <summary>
         /// Create a Board. The width and height will always be treated as positive ints
         /// </summary>
@@ -105,7 +100,6 @@ namespace Game.BoardGame
             args.SourcePosition = sender as Position;
             args.PropertyName = e.PropertyName;
             BoardChange?.Invoke(sender, args);
-            BoardChangeCompleted?.Invoke(this, e);
         }
     }
 }

@@ -49,13 +49,21 @@ namespace Game.BoardGame
             } 
         }
 
+        public bool _canEndSelect;
         /// <summary>
         /// Indicates that this position is eligible as an end position
         /// (that is a position to complete a players turn). Note that
         /// we would expect CanEndSelect to only ever be true where a parent
         /// board contains a true value for <see cref="IsStartSelected"/>
         /// </summary>
-        public bool CanEndSelect { get; set; }
+        public bool CanEndSelect {
+            get => _canEndSelect; 
+            set 
+            {
+                _canEndSelect = value;
+                OnPropertyChanged();
+            }
+        }
 
         private bool _isEndSelected;
         /// <summary>

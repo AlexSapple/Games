@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Common.Interface
 {
@@ -54,5 +50,11 @@ namespace Common.Interface
         /// secondary or "end" position (that is to complete a move).
         /// </summary>
         public bool IsEndSelected { get; set; }
+
+        /// <summary>
+        /// Event handler for the board change event, this will trigger when various 
+        /// board position changes occur.
+        /// </summary>
+        event PropertyChangedEventHandler PropertyChanged;
     }
 }

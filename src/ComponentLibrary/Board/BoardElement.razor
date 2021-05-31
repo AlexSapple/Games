@@ -23,22 +23,17 @@
     /// <summary>
     /// tuple of the current turn and if that turn is "myTurn"
     /// </summary>
-    private (IPlayer CurrentTurn, bool IsMyTurn) CurrentTurnAndIsMyTurn { 
-        get 
+    private (IPlayer CurrentTurn, bool IsMyTurn) CurrentTurnAndIsMyTurn {
+        get
         {
-            return (BoardData.CurrentTurn, BoardData.CurrentTurn?.Id == MyPlayerId); 
-        } 
+            return (BoardData.CurrentTurn, BoardData.CurrentTurn?.Id == MyPlayerId);
+        }
     }
 
     protected override void OnInitialized()
     {
         if (BoardData == null)
             throw new ArgumentNullException(nameof(BoardData), "Must not be null");
-
-        //since game logic may make changes to the positions of the board (outside of the context
-        //of any specific dom event - we subscribe to the games boardChangeCompleted event to ensure
-        //we re-draw the board when this happens.
-        BoardData.BoardChangeCompleted += (s, e) => StateHasChanged();
     }
 
     private string GetColumnLayout()

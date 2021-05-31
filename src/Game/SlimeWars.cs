@@ -14,12 +14,34 @@ namespace Game
     /// Represents a single game of slime wars. Handles the logic
     /// and board updates within the game.
     /// </summary>
-    public class SlimeWars : TurnBasedBoardGame
+    public class SlimeWars : TurnBasedBoardGame, ITurnBasedBoardGame
     {
         /// <summary>
-        /// The underlying game board exposed as an IBoard interface
+        /// The underlying game board exposed as an IBoard interface to implement <see cref="ITurnBasedBoardGame.Board"/>
         /// </summary>
         public IBoard Board => _board;
+
+        object objectLock = new Object();
+        /// <summary>
+        /// The turn iterated event exposed as Event handler to implement <see cref="ITurnBasedBoardGame.TurnIterated"/>
+        /// </summary>
+        public event EventHandler<EventArgs> TurnIterated
+        {
+            add
+            {
+                lock (objectLock)
+                {
+                    _turnIterated += value;
+                }
+            }
+            remove
+            {
+                lock (objectLock)
+                {
+                    _turnIterated -= value;
+                }
+            }
+        }
 
         /// <summary>
         /// The specific colours used for the slime wars game
