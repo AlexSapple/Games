@@ -1,5 +1,6 @@
 ﻿@using ComponentLibrary.Board
 @using ComponentLibrary.WinLoseDraw
+@using ComponentLibrary.Timer;
 @using SlimeWars
 @using AutomatedPlayer
 @using Game.Enum;
@@ -7,6 +8,7 @@
 
 @if (game != null)
 {
+    <CountdownTimer _game="@game" />
     <BoardElement BoardData="@game.Board" MyPlayerId="@MyPlayerId" />
 }
 

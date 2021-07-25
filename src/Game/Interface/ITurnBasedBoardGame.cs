@@ -16,5 +16,15 @@ namespace Game.Interface
         /// The turn iterated event.
         /// </summary>
         event EventHandler<EventArgs> TurnIterated;
+
+        /// <summary>
+        /// The sample rate for the countdown - do not attempt to refresh UI components faster than this sample rate.
+        /// </summary>
+        int SampleRateMilliseconds { get; }
+
+        /// <summary>
+        /// a representation of the remaning duration of the current turn as a timespan.
+        /// </summary>
+        TimeSpan TurnTimeRemaining { get; }
     }
 }

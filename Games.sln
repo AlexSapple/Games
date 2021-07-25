@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{67C74B82-9C5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{B638AA7A-35F1-4341-911C-5056A11F454D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimeWars", "src\Games\SlimeWars\SlimeWars.csproj", "{BFF781A8-C1D9-4E22-A08A-0BC9EF8BB447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlimeWars", "src\Games\SlimeWars\SlimeWars.csproj", "{BFF781A8-C1D9-4E22-A08A-0BC9EF8BB447}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
