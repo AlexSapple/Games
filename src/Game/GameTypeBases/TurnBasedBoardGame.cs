@@ -15,7 +15,8 @@ namespace Game.GameTypeBases
     public abstract class TurnBasedBoardGame : BoardGame
     {
         /// <summary>
-        /// The timer per turn.
+        /// The timer per turn. This timer controls the sample rate, on it's elapsed
+        /// event, the time per turn is evaluated to determine if it has expired
         /// </summary>
         protected readonly Timer _turnTimer;
 
@@ -34,6 +35,9 @@ namespace Game.GameTypeBases
         /// </summary>
         public int SampleRateMilliseconds { get; }
 
+        /// <summary>
+        /// class level reference to the initial time limit per turn (for resetting purposes)
+        /// </summary>
         private readonly TimeSpan _timeLimitPerTurn; 
 
         protected void OnTurnIterated(EventArgs e)
@@ -63,7 +67,6 @@ namespace Game.GameTypeBases
 
             if(timeLimitPerTurn.HasValue)
             {
-                //_turnTimer = new Timer(timeLimitPerTurn.Value.TotalMilliseconds);
                 _timeLimitPerTurn = timeLimitPerTurn.Value;
                 _turnTimeRemaining = timeLimitPerTurn.Value;
                 SampleRateMilliseconds = sampleRateMilliseconds;

@@ -23,7 +23,7 @@ namespace Game.Interface
         int SampleRateMilliseconds { get; }
 
         /// <summary>
-        /// a representation of the remaning duration of the current turn as a timespan.
+        /// a representation of the remaining duration of the current turn as a timespan.
         /// </summary>
         TimeSpan TurnTimeRemaining { get; }
     }
