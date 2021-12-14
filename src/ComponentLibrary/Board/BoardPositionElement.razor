@@ -14,9 +14,6 @@
         if (Position == null)
             throw new ArgumentNullException(nameof(Position), "Must not be null");
 
-        //since game logic may make changes to the positions of the board (outside of the context
-        //of any specific dom event - we subscribe to the games boardChangeCompleted event to ensure
-        //we re-draw the board when this happens.
         Position.PropertyChanged += (s, e) => StateHasChanged();
     }
 

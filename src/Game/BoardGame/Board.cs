@@ -44,12 +44,6 @@ namespace Game.BoardGame
         /// </summary>
         public event EventHandler<BoardChangeEventArgs> BoardChange;
 
-        /// <summary>
-        /// Event handler for the completion of the board change event, this will trigger
-        /// after the completion of all logic that triggers the <see cref="BoardChange"/> event
-        /// </summary>
-        public event EventHandler<EventArgs> BoardChangeCompleted;
-
         protected void OnBoardChange(BoardChangeEventArgs e)
         {
             BoardChange?.Invoke(this, e);

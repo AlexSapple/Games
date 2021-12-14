@@ -45,6 +45,12 @@ namespace SlimeWars
         }
 
         /// <summary>
+        /// The underlying time remaining on the current turn to implement <see cref="ITurnBasedBoardGame.TurnTimeRemaining"/> (if applicable). If this game does not include a timer, then this
+        /// will return the zero timespan.
+        /// </summary>
+        public TimeSpan TurnTimeRemaining => _turnTimeRemaining.Duration();
+
+        /// <summary>
         /// The specific colours used for the slime wars game
         /// </summary>
         private static readonly Stack<string> Colours = new Stack<string>(new List<string> { "Yellow", "Red", "Green", "Blue" });
@@ -58,7 +64,7 @@ namespace SlimeWars
         /// <param name="humanPlayers"></param>
         /// <param name="timeLimitPerTurnInSeconds"></param>
         public SlimeWars(int width, int height, List<Guid> players, int timeLimitPerTurnInSeconds = 60)
-            : base(players, Colours, width, height, timeLimitPerTurnInSeconds)
+            : base(players, Colours, width, height, new TimeSpan(0, 0, timeLimitPerTurnInSeconds))
         {
             _board.BoardChange += HandleBoardChangeEvent;
             IteratePlayerTurn();

@@ -1,0 +1,24 @@
+﻿@using Game.Interface
+
+<span>@_game?.TurnTimeRemaining.ToString(@"mm\:ss")</span>
+
+@code {
+
+    [Parameter] public ITurnBasedBoardGame _game { get; set; }
+
+    [Parameter] public int SecondsToWarning { get; set; } = 10;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        while(_game?.TurnTimeRemaining.Ticks > 0)
+            await UpdateCountdownStateAtInterval();
+    }
+
+    private async Task UpdateCountdownStateAtInterval()
+    {
+        await Task.Delay(_game.SampleRateMilliseconds);
+        StateHasChanged();
+    }
+
+}
