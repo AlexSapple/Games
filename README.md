@@ -5,7 +5,7 @@ A set of projects to create simple games in C# and blazor, based around a 2d boa
 [![.NET](https://github.com/AlexSapple/Games/actions/workflows/dotnet.yml/badge.svg)](https://github.com/AlexSapple/Games/actions/workflows/dotnet.yml)
 
 This project is intended for experimentation and learning. It consists of a solution containing a 
-.Net 5 Blazor web application with a component library and various C# projects. The application layer
+.Net 6 Blazor web application with a component library and various C# projects. The application layer
 is essentially a demonstration of the components and logic. 
 
 The structure is such that the board is general purpose element that has a great deal of reuse. The 
