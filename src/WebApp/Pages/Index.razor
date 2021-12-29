@@ -1,63 +1,34 @@
-﻿@using ComponentLibrary.Board
-@using ComponentLibrary.WinLoseDraw
-@using ComponentLibrary.Timer;
-@using SlimeWars
-@using AutomatedPlayer
-@using Game.Enum;
-@page "/"
+﻿@page "/"
 
-@if (game != null)
-{
-    <CountdownTimer _game="@game" />
-    <BoardElement BoardData="@game.Board" MyPlayerId="@MyPlayerId" />
-}
+<h2>Choose a game</h2>
 
-@if (game?.Status == Status.Completed)
-{
-    var parameters = new ModalParameters();
-    parameters.Add(nameof(Outcome), GetOutcome());
-    Modal.Show<WinLoseDraw>("", parameters, new ModalOptions { HideCloseButton = true });
-}
-
-@code{
-
-    [CascadingParameter] public IModalService Modal { get; set; }
-
-    private SlimeWars game;
-
-    private Guid MyPlayerId;
-
-    //keep a collection of opponents to ensure they do not fall out of scope and become fodder for the GC mid game :)
-    private List<AutomatedPlayer> Opponents = new List<AutomatedPlayer>();
-
-    protected override void OnInitialized()
-    {
-        //identifier of this human player
-        MyPlayerId = Guid.NewGuid();
-
-        //identifier of our cpu opponent
-        Guid opponentId = Guid.NewGuid();
-
-        //fire up the game logic and board
-        game = new SlimeWars(7, 7, new List<Guid> { MyPlayerId, opponentId });
-        game.PropertyChanged += (s, e) => StateHasChanged();
-        game.TurnIterated += (s, e) => StateHasChanged();
-
-        //and make sure our opponent has a reference to the game board too.
-        Opponents.Add(new MechanicalTurk(opponentId, game));
-    }
-
-    private Outcome GetOutcome()
-    {
-        if (game.Status != Status.Completed)
-            throw new Exception("the game has not yet completed, do not call GetOutcome yet");
-
-        Outcome outcome = Outcome.Lose;
-        if (game.Winner == null)
-            outcome = Outcome.Draw;
-        else if (game.Winner.Id == MyPlayerId)
-            outcome = Outcome.Win;
-
-        return outcome;
-    }
-}
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Slime Wars</h5>
+        <h6 class="card-subtitle mb-2 text-muted">take over the board! originally by Jagex</h6>
+        <p class="card-text">
+            2 player turn based game of infection! The objective 
+            is to turn the board your colour by taking control 
+            of empty spaces. When you occupy a space, if your 
+            opponent occupies a neighbouring the position, then it too becomes 
+            your space. If you move a single step, then you multiply. If you jump 
+            2 steps then you simply move.
+        </p>
+        <a href="/slimewars" class="btn btn-primary">Play</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Coming Soon</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Additional mini games</h6>
+        <p class="card-text">
+            Using the same technology, more games and simulations will soon be added.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
