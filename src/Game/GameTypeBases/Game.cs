@@ -64,7 +64,7 @@ namespace Game.GameTypeBases
         /// is needed.
         /// </summary>
         /// <param name="playerIds">Id's for required players</param>
-        /// <param name="playerColourPool">the coloyr names to apply to the players</param>
+        /// <param name="playerColourPool">the colour names to apply to the players</param>
         protected virtual void initPlayers(List<Guid> playerIds, Stack<string> playerColourPool)
         {
             if (playerColourPool.Count < playerIds.Count)

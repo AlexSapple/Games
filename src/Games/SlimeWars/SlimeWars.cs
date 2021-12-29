@@ -53,7 +53,7 @@ namespace SlimeWars
         /// <summary>
         /// The specific colours used for the slime wars game
         /// </summary>
-        private static readonly Stack<string> Colours = new Stack<string>(new List<string> { "Yellow", "Red", "Green", "Blue" });
+        //private readonly Stack<string> Colours = new Stack<string>(new List<string> { "Yellow", "Red", "Green", "Blue" });
 
         /// <summary>
         /// construct a slime wars game. 
@@ -64,9 +64,24 @@ namespace SlimeWars
         /// <param name="humanPlayers"></param>
         /// <param name="timeLimitPerTurnInSeconds"></param>
         public SlimeWars(int width, int height, List<Guid> players, int timeLimitPerTurnInSeconds = 60)
-            : base(players, Colours, width, height, new TimeSpan(0, 0, timeLimitPerTurnInSeconds))
+            : base(players, new Stack<string>(new List<string> { "Yellow", "Red", "Green", "Blue" }), width, height, new TimeSpan(0, 0, timeLimitPerTurnInSeconds))
         {
             _board.BoardChange += HandleBoardChangeEvent;
+            IteratePlayerTurn();
+            Status = Status.InProgress;
+        }
+
+        public void ResetGame()
+        {
+            ResetBoard();
+            
+            foreach (var position in _board._positions)
+                position.Occupier = null;
+
+            _board.CurrentTurn = null;
+
+            Status = Status.New;
+            OccupyInitialPositions();
             IteratePlayerTurn();
             Status = Status.InProgress;
         }
@@ -286,14 +301,17 @@ namespace SlimeWars
         /// <returns></returns>
         private WinType CheckForWinConditionOfCurrentPlayer()
         {
-            //If player is the only occupier remaining, this player has won
-            var allOccupiedPositions = _board.Positions.Where(p => p.Occupier != null);
-            if (allOccupiedPositions.All(op => op.Occupier == _board.CurrentTurn))
-                return WinType.LastManStanding;
+            if (_board.CurrentTurn != null)
+            {
+                //If player is the only occupier remaining, this player has won
+                var allOccupiedPositions = _board.Positions.Where(p => p.Occupier != null);
+                if (allOccupiedPositions.All(op => op.Occupier == _board.CurrentTurn))
+                    return WinType.LastManStanding;
 
-            //If everyone else can't move, this player has won
-            if (!Players.Where(p => p.Id != _board.CurrentTurn.Id).Any(p => CanMakeMove(p)))
-                return WinType.LegalMoves;
+                //If everyone else can't move, this player has won
+                if (!Players.Where(p => p.Id != _board.CurrentTurn.Id).Any(p => CanMakeMove(p)))
+                    return WinType.LegalMoves;
+            }
 
             //the game should continue - there isn't a valid win condition at this time.
             return WinType.NoWin;

@@ -47,5 +47,14 @@ namespace Game.GameTypeBases
                 position.IsEndSelected = false;
             }
         }
+
+        //protected void ResetGame()
+        //{
+        //    ResetBoard();
+        //    Status = Status.New;
+        //    OccupyInitialPositions();
+        //    IteratePlayerTurn();
+        //    Status = Status.InProgress;
+        //}
     }
 }
