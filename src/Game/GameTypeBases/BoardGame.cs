@@ -47,5 +47,21 @@ namespace Game.GameTypeBases
                 position.IsEndSelected = false;
             }
         }
+
+        /// <summary>
+        /// Convenience method to reset the board game
+        /// </summary>
+        protected void ResetBoardGame()
+        {
+            ResetBoard();
+
+            foreach (var position in _board._positions)
+                position.Occupier = null;
+
+            _board.CurrentTurn = null;
+
+            ResetGame();
+            OccupyInitialPositions();
+        }
     }
 }

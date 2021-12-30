@@ -64,7 +64,7 @@ namespace Game.GameTypeBases
         /// is needed.
         /// </summary>
         /// <param name="playerIds">Id's for required players</param>
-        /// <param name="playerColourPool">the coloyr names to apply to the players</param>
+        /// <param name="playerColourPool">the colour names to apply to the players</param>
         protected virtual void initPlayers(List<Guid> playerIds, Stack<string> playerColourPool)
         {
             if (playerColourPool.Count < playerIds.Count)
@@ -80,6 +80,14 @@ namespace Game.GameTypeBases
 
             //and reorder the players to create a random player order
             ShufflePlayers();
+        }
+
+        /// <summary>
+        /// Convenience method to reset the Game.
+        /// </summary>
+        protected void ResetGame()
+        {
+            Status = Status.New;
         }
 
         /// <summary>
