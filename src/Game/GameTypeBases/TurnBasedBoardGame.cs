@@ -123,14 +123,5 @@ namespace Game.GameTypeBases
             OnTurnIterated(EventArgs.Empty);
             _turnTimeRemaining = _timeLimitPerTurn;
         }
-
-        //public void ResetGame()
-        //{
-        //    ResetBoard();
-        //    Status = Status.New;
-        //    OccupyInitialPositions();
-        //    IteratePlayerTurn();
-        //    Status = Status.InProgress;
-        //}
     }
 }

@@ -48,13 +48,20 @@ namespace Game.GameTypeBases
             }
         }
 
-        //protected void ResetGame()
-        //{
-        //    ResetBoard();
-        //    Status = Status.New;
-        //    OccupyInitialPositions();
-        //    IteratePlayerTurn();
-        //    Status = Status.InProgress;
-        //}
+        /// <summary>
+        /// Convenience method to reset the board game
+        /// </summary>
+        protected void ResetBoardGame()
+        {
+            ResetBoard();
+
+            foreach (var position in _board._positions)
+                position.Occupier = null;
+
+            _board.CurrentTurn = null;
+
+            ResetGame();
+            OccupyInitialPositions();
+        }
     }
 }

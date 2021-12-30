@@ -71,17 +71,12 @@ namespace SlimeWars
             Status = Status.InProgress;
         }
 
-        public void ResetGame()
+        /// <summary>
+        /// Reset Slime wars (to begin a new game)
+        /// </summary>
+        public void Reset()
         {
-            ResetBoard();
-            
-            foreach (var position in _board._positions)
-                position.Occupier = null;
-
-            _board.CurrentTurn = null;
-
-            Status = Status.New;
-            OccupyInitialPositions();
+            ResetBoardGame();
             Status = Status.InProgress;
             IteratePlayerTurn();
         }

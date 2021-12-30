@@ -83,6 +83,14 @@ namespace Game.GameTypeBases
         }
 
         /// <summary>
+        /// Convenience method to reset the Game.
+        /// </summary>
+        protected void ResetGame()
+        {
+            Status = Status.New;
+        }
+
+        /// <summary>
         /// Shuffle the players in to a near random order.
         /// </summary>
         private void ShufflePlayers()
