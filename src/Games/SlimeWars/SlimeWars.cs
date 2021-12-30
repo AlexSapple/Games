@@ -82,8 +82,8 @@ namespace SlimeWars
 
             Status = Status.New;
             OccupyInitialPositions();
-            IteratePlayerTurn();
             Status = Status.InProgress;
+            IteratePlayerTurn();
         }
 
         /// <summary>
