@@ -21,7 +21,7 @@ namespace Game.GameTypeBases
         /// <param name="playerColourPool"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public BoardGame(List<Guid> playerIds, Stack<string> playerColourPool, int width, int height)
+        public BoardGame(List<Guid> playerIds, string[] playerColourPool, int width, int height)
             : base(playerIds, playerColourPool)
         {
             _board = new Board(width, height);

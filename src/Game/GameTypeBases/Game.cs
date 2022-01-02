@@ -52,7 +52,7 @@ namespace Game.GameTypeBases
         /// </summary>
         /// <param name="playerIds"></param>
         /// <param name="playerColourPool"></param>
-        public Game (List<Guid> playerIds, Stack<string> playerColourPool)
+        public Game (List<Guid> playerIds, string[] playerColourPool)
         {
             initPlayers(playerIds, playerColourPool);
             if (!Players.Any())
@@ -65,16 +65,16 @@ namespace Game.GameTypeBases
         /// </summary>
         /// <param name="playerIds">Id's for required players</param>
         /// <param name="playerColourPool">the colour names to apply to the players</param>
-        protected virtual void initPlayers(List<Guid> playerIds, Stack<string> playerColourPool)
+        protected virtual void initPlayers(List<Guid> playerIds, string[] playerColourPool)
         {
-            if (playerColourPool.Count < playerIds.Count)
+            if (playerColourPool.Count() < playerIds.Count)
                 throw new ArgumentException("Not enough colours for the number of players", nameof(playerColourPool));
 
             if (playerIds != null)
             {
-                foreach (Guid humanPlayer in playerIds)
+                for(int i = 0; i < playerIds.Count; i++)
                 {
-                    Players.Add(new Player(humanPlayer, playerColourPool.Pop()));
+                    Players.Add(new Player(playerIds[i], playerColourPool[i]));
                 }
             }
 
