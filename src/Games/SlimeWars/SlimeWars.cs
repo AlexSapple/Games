@@ -53,7 +53,7 @@ namespace SlimeWars
         /// <summary>
         /// The specific colours used for the slime wars game
         /// </summary>
-        //private readonly Stack<string> Colours = new Stack<string>(new List<string> { "Yellow", "Red", "Green", "Blue" });
+        private static readonly string[] Colours = new string[] { "Blue", "Green", "Red", "Yellow" };
 
         /// <summary>
         /// construct a slime wars game. 
@@ -64,7 +64,7 @@ namespace SlimeWars
         /// <param name="humanPlayers"></param>
         /// <param name="timeLimitPerTurnInSeconds"></param>
         public SlimeWars(int width, int height, List<Guid> players, int timeLimitPerTurnInSeconds = 60)
-            : base(players, new Stack<string>(new List<string> { "Yellow", "Red", "Green", "Blue" }), width, height, new TimeSpan(0, 0, timeLimitPerTurnInSeconds))
+            : base(players, Colours, width, height, new TimeSpan(0, 0, timeLimitPerTurnInSeconds))
         {
             _board.BoardChange += HandleBoardChangeEvent;
             IteratePlayerTurn();

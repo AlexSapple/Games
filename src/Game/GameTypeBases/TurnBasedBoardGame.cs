@@ -55,7 +55,7 @@ namespace Game.GameTypeBases
         /// <param name="height"></param>
         /// <param name="timeLimitPerTurn">A timespan representing the maximum duration of a turn</param>
         /// <param name="sampleRateMilliseconds">The level of precision needed for querying remaining time, for example if you want to query this rapidly, you may need it to update faster than once per second</param>
-        public TurnBasedBoardGame(List<Guid> playerIds, Stack<string> playerColourPool, int width, int height, TimeSpan? timeLimitPerTurn = null, int sampleRateMilliseconds = 1000)
+        public TurnBasedBoardGame(List<Guid> playerIds, string[] playerColourPool, int width, int height, TimeSpan? timeLimitPerTurn = null, int sampleRateMilliseconds = 1000)
             : base(playerIds, playerColourPool, width, height)
         {
             if (timeLimitPerTurn.HasValue && timeLimitPerTurn.Value.TotalSeconds < 0)
