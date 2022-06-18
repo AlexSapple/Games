@@ -1,5 +1,6 @@
 ﻿using Game.Interface;
 using System;
+using System.Threading.Tasks;
 
 namespace AutomatedPlayer
 {
@@ -40,6 +41,6 @@ namespace AutomatedPlayer
         /// at the correct time and so derived instances do not need
         /// to check if it is there turn.
         /// </summary>
-        protected abstract void MakeMove();
+        protected abstract Task MakeMove();
     }
 }
