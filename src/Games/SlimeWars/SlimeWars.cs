@@ -212,23 +212,31 @@ namespace SlimeWars
                     startSelected.Occupier = null;
 
                 //5. check if this move has created a win scenario
-                WinType winType = CheckForWinConditionOfCurrentPlayer();
-                if (winType != WinType.NoWin)
-                {
-                    Status = Status.Completed;
-                    Winner = _board.CurrentTurn;
-                    ResetBoard();
-
-                    if (winType == WinType.LegalMoves)
-                    {
-                        //for animation purposes, in this type of win, we want to occupy all the places.
-                        var fillPositions = _board._positions.Where(p => p.Occupier == null)?.ToList();
-                        fillPositions.ForEach(p => p.Occupier = _board.CurrentTurn);
-                    }
-                }
+                CheckAndHandleWinStatus();
 
                 //6. Iterate to the next player turn.
                 IteratePlayerTurn();
+            }
+        }
+
+        /// <summary>
+        /// Check for and handle a winning status
+        /// </summary>
+        private void CheckAndHandleWinStatus()
+        {
+            WinType winType = CheckForWinConditionOfCurrentPlayer();
+            if (winType != WinType.NoWin)
+            {
+                Status = Status.Completed;
+                Winner = _board.CurrentTurn;
+                ResetBoard();
+
+                if (winType == WinType.LegalMoves)
+                {
+                    //for animation purposes, in this type of win, we want to occupy all the places.
+                    var fillPositions = _board._positions.Where(p => p.Occupier == null)?.ToList();
+                    fillPositions.ForEach(p => p.Occupier = _board.CurrentTurn);
+                }
             }
         }
 
@@ -263,6 +271,8 @@ namespace SlimeWars
                         else
                             _board.CurrentTurn = Players[0];
 
+                        //see if this player is already in a winning position.
+                        CheckAndHandleWinStatus();
                         UpdateStartSelectablePositions();
 
                         break;
