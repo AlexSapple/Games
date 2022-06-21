@@ -17,9 +17,14 @@
         LastManStanding,
 
         /// <summary>
-        /// the board is full or the current player is the only player
+        /// The current player is the only player
         /// who has legal moves.
         /// </summary>
-        LegalMoves
+        LegalMoves,
+
+        /// <summary>
+        /// The board is completed, and a score based win is required
+        /// </summary>
+        Score
     }
 }

@@ -224,18 +224,18 @@ namespace SlimeWars
         /// </summary>
         private void CheckAndHandleWinStatus()
         {
-            WinType winType = CheckForWinConditionOfCurrentPlayer();
-            if (winType != WinType.NoWin)
+            (IPlayer winningPlayer, WinType winType) = CheckForWinner();
+            if(winType != WinType.NoWin)
             {
                 Status = Status.Completed;
-                Winner = _board.CurrentTurn;
+                Winner = winningPlayer;
                 ResetBoard();
 
                 if (winType == WinType.LegalMoves)
                 {
                     //for animation purposes, in this type of win, we want to occupy all the places.
                     var fillPositions = _board._positions.Where(p => p.Occupier == null)?.ToList();
-                    fillPositions.ForEach(p => p.Occupier = _board.CurrentTurn);
+                    fillPositions.ForEach(p => p.Occupier = winningPlayer);
                 }
             }
         }
@@ -314,12 +314,45 @@ namespace SlimeWars
                     return WinType.LastManStanding;
 
                 //If everyone else can't move, this player has won
-                if (!Players.Where(p => p.Id != _board.CurrentTurn.Id).Any(p => CanMakeMove(p)))
-                    return WinType.LegalMoves;
+                //but this rule doesn't apply if there are no more spaces at all 
+                //if that happens - then it's down to who has more spaces
+                if(_board.Positions.Any(p => p.Occupier == null) &&
+                    !Players.Where(p => p.Id != _board.CurrentTurn.Id).Any(p => CanMakeMove(p)))
+                        return WinType.LegalMoves;
             }
 
             //the game should continue - there isn't a valid win condition at this time.
             return WinType.NoWin;
+        }
+
+        private (IPlayer Winner, WinType WinType) CheckForWinner()
+        {
+            //does the current winner have a winning position.
+            WinType winType = CheckForWinConditionOfCurrentPlayer();
+            if(winType != WinType.NoWin)
+            {
+                return (_board.CurrentTurn, winType);
+            }
+
+            //has the board become full up - if so this is a score based win
+            if (_board.Positions.All(p => p.Occupier != null))
+            {
+                Dictionary<IPlayer, int> playersByScore = new Dictionary<IPlayer, int>();
+                foreach(var position in _board.Positions)
+                {
+                    var player = position.Occupier;
+                    if (playersByScore.ContainsKey(player))
+                        playersByScore[player]++;
+                    else
+                        playersByScore.Add(player, 1);
+                }
+
+                IPlayer winner = playersByScore.MaxBy(p => p.Value).Key;
+                return (winner, WinType.Score);
+            }
+
+            //the game should continue - there isn't a valid win condition at this time.
+            return (null, WinType.NoWin);
         }
 
         /// <summary>
